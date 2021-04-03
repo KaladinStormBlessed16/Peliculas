@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+<head>
+    <meta charset="UTF-8" />
+    <title th:text="${titulo}"></title>
+</head>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">David Carrió Ricardo</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+</nav>
+
+    <body>
+        <form class="container text-center w-25" th:action="@{/peliculas/verPelicula}" th:object="${pelicula}" method="get">
+            <h1 class="my-5">Buscar Pelicula</h1>
+            <div class="form-group">
+                <label>TITULO</label>
+                <div>
+                    <input type="text" th:field="*{Title}" class="form-control" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <input type="submit" value="Buscar Pelicula" class="btn btn-primary" />
+                </div>
+                 <div class="col-6">
+                     <a class="btn btn-danger" th:href="@{/peliculas/listarPeliculas}">Peliculas Favoritas</a>
+                 </div>
+            </div>
+        </form>
+
+        <form class="row d-flex align-items-center justify-content-center mt-5 w-100" th:if="${pelicula.Title}"
+        th:action="@{/peliculas/guardarPelicula}" th:object="${pelicula}" method="get">
+            <div class="col-4 offset-1">
+                <table class="table table-hover my-5">
+                    <thead class="thead-dark">
+                        <tr class="row">
+                            <th class="col-6">TITULO:</th>
+                            <th class="col-6" th:text="${pelicula.Title}"></th>
+                        </tr>
+                    </thead>
+
+                    <tr class="row">
+                        <td class="col-6">DIRECTOR</td>
+                        <td class="col-6" th:text="${pelicula.Director}"></td>
+                    </tr>
+                    <tr class="row">
+                        <td class="col-6">AÑO</td>
+                        <td class="col-6" th:text="${pelicula.Year}"></td>
+                    </tr>
+                    <tr class="row">
+                        <td class="col-6">DURACION</td>
+                        <td class="col-6" th:text="${pelicula.Runtime}"></td>
+                    </tr>
+                </table>
+
+                <div class="row my-3 ml-0">
+                    <div class="col-5">
+                        <input type="submit" class="btn btn-danger" value="Añadir a Favoritos">
+                    </div>
+                    <div class="col-7" th:if="${fav}">
+                        <p class="h5 text-danger">Pelicula añadida a Favoritos.</p>
+                    </div>
+                    <div class="col-7" th:if="${added}">
+                        <p class="h5 text-danger">La Pelicula ya está en Favoritos.</p>
+                    </div>
+                </div>
+                
+            </div>
+            <div class="col-3 offset-1">
+                <img th:src="${pelicula.Poster}">
+            </div>
+
+        </form>
+    </body>
+</html>
